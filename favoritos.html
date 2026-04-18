@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Favoritos</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <h1 class="logo">PREMIUM MOTORS</h1>
+
+    <ul class="menu">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="estoque.html">Estoque</a></li>
+      <li>
+  <a href="favoritos.html">
+    Favoritos (<span id="contador-favoritos">0</span>)
+  </a>
+</li>
+      <li><a href="recomendador.html">Descubra seu carro ideal</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <h1 style="text-align:center;">Meus Favoritos</h1>
+ 
+  <div style="text-align:center; margin-top:20px;">
+  <button onclick="limparFavoritos()" class="btn">Limpar favoritos</button>
+</div>
+<!-- BOTÃO PARA ENVIAR FAVORITOS -->
+<div style="text-align:center; margin-top:20px;">
+  <button onclick="enviarFavoritosWhatsApp()" class="btn">
+    Enviar favoritos no WhatsApp
+  </button>
+</div>
+
+  <div id="lista-carros"></div>
+
+  <p id="sem-favoritos" style="text-align:center; display:none;">
+    Você ainda não adicionou nenhum carro aos favoritos.
+  </p>
+  
+</main>
+<footer>
+  <p>© 2026 PREMIUM MOTORS</p>
+  <p>Contato: (27) 99999-9999</p>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>

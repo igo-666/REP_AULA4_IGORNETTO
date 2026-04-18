@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veículo - PREMIUM MOTORS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar">
+    <h1 class="logo">PREMIUM MOTORS</h1>
+
+    <ul class="menu">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="estoque.html">Estoque</a></li>
+      <li>
+  <a href="favoritos.html">
+    Favoritos (<span id="contador-favoritos">0</span>)
+  </a>
+</li>
+      <li><a href="recomendador.html">Descubra seu carro ideal</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="carro-container">
+
+  <!-- IMAGEns -->
+  <div class="galeria">
+
+  <div class="imagem-principal">
+    <img id="imagem-carro" alt="Carro">
+  </div>
+
+  <div class="miniaturas" id="miniaturas"></div>
+
+</div>
+
+  <!-- INFO -->
+  <div class="carro-info">
+    <h1 id="nome-carro"></h1>
+    <p id="preco-carro" class="preco"></p>
+    <!-- ===================== -->
+<!-- SIMULAÇÃO DE FINANCIAMENTO -->
+<!-- ===================== -->
+<div class="simulador">
+
+  <h3>Simular financiamento</h3>
+
+  <label>Entrada (R$):</label>
+  <input type="text" id="entrada" placeholder="Ex: 20.000">
+
+  <label>Parcelas:</label>
+  <select id="parcelas">
+    <option value="12">12x</option>
+    <option value="24">24x</option>
+    <option value="36">36x</option>
+    <option value="48">48x</option>
+  </select>
+
+ <<button id="btn-simular" class="btn">Simular</button>
+
+  <p id="resultado-simulacao"></p>
+
+  <p class="aviso">
+    *Valores simulados. Sujeitos à aprovação de crédito.
+  </p>
+
+ <button id="btn-financiamento" class="btn btn-whatsapp" style="display:none;">
+  Quero financiar via WhatsApp
+ </button>
+</div>
+    <!-- BOTÃO DE FAVORITO NA PÁGINA DO CARRO -->
+<button id="btn-favorito" class="btn btn-secundario">
+  ❤️ Adicionar aos favoritos
+</button>
+
+    <ul class="ficha">
+      <li><strong>Ano:</strong> 2021</li>
+      <li><strong>KM:</strong> 35.000</li>
+      <li><strong>Combustível:</strong> Flex</li>
+      <li><strong>Câmbio:</strong> Automático</li>
+    </ul>
+
+    <a id="btn-whatsapp" target="_blank" class="btn">Falar no WhatsApp</a>
+    <a href="estoque.html" class="btn btn-secundario">Voltar</a>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2026 PREMIUM MOTORS</p>
+  <p>Contato: (27) 99999-9999</p>
+</footer>
+
+<a href="https://wa.me/5599999999999?text=Olá, tenho interesse em um veículo"
+   class="whatsapp-float"
+   target="_blank">
+  💬
+</a>
+
+<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,404 @@
+/* =========================
+   RESET GLOBAL
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0A0A0A;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.logo {
+  color: #C9A95D;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+.menu a:hover {
+  color: #C9A95D;
+}
+
+/* contador favoritos */
+.menu .contador {
+  background: #C9A95D;
+  color: black;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 5px;
+}
+
+/* =========================
+   HERO
+========================= */
+.hero {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.8),
+    rgba(0,0,0,0.95)
+  );
+
+  text-align: center;
+}
+
+.hero-content h2 {
+  font-size: 56px;
+  letter-spacing: 4px;
+  font-weight: 700;
+}
+
+.hero-content p {
+  color: #aaa;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+.btn {
+  background: #C9A95D;
+  color: black;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #C9A95D;
+  color: #C9A95D;
+}
+
+/* botão whatsapp */
+.btn-whatsapp {
+  background: linear-gradient(135deg, #25D366, #1ebe5d);
+  color: #fff !important;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 14px 26px;
+  display: inline-block;
+  box-shadow: 0 10px 25px rgba(37,211,102,0.25);
+  transition: 0.3s;
+}
+
+.btn-whatsapp:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(37,211,102,0.35);
+}
+
+/* =========================
+   FILTROS
+========================= */
+.filtros {
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filtros select,
+.filtros input {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  background: #111;
+  color: white;
+}
+
+/* =========================
+   LISTA DE CARROS
+========================= */
+#lista-carros {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* =========================
+   CARD PREMIUM (NOVO)
+========================= */
+.car-card {
+  display: block;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  text-decoration: none;
+  color: white;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+}
+
+/* imagem */
+.car-image {
+  height: 180px;
+  overflow: hidden;
+}
+
+.car-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* conteúdo */
+.car-body {
+  padding: 14px;
+}
+
+.car-body h3 {
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+
+.price {
+  color: #C9A95D;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.car-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* FAVORITO */
+.fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.fav-btn:hover {
+  transform: scale(1.2);
+}
+
+/* =========================
+   PÁGINA DO CARRO
+========================= */
+.carro-container {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.carro-imagem {
+  width: 500px;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111;
+}
+
+.carro-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carro-info {
+  max-width: 400px;
+}
+
+.preco {
+  font-size: 28px;
+  color: #C9A95D;
+  margin: 10px 0;
+}
+
+/* =========================
+   SIMULADOR
+========================= */
+.simulador {
+  margin-top: 20px;
+  background: rgba(255,255,255,0.03);
+  padding: 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.simulador input,
+.simulador select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background: #1A1A1A;
+  border: none;
+  color: white;
+  border-radius: 6px;
+}
+
+#resultado-simulacao {
+  font-size: 20px;
+  font-weight: bold;
+  color: #C9A95D;
+}
+
+/* =========================
+   WHATSAPP FLOAT
+========================= */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: black;
+  font-size: 24px;
+  padding: 15px;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  transition: 0.3s;
+  z-index: 999;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+/* =========================
+   ESTADOS
+========================= */
+.empty {
+  text-align: center;
+  opacity: 0.6;
+  padding: 40px;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+@media (max-width: 768px) {
+
+  .hero-content h2 {
+    font-size: 32px;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .carro-imagem img {
+    width: 100%;
+  }
+}
+/* =========================
+   GALERIA DE IMAGENS
+========================= */
+
+.galeria {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.imagem-principal {
+  width: 500px;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111;
+}
+
+.imagem-principal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* MINIATURAS */
+.miniaturas {
+  display: flex;
+  gap: 10px;
+}
+
+.miniaturas img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.miniaturas img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.miniaturas img.ativa {
+  border: 2px solid #C9A95D;
+  opacity: 1;
+}
