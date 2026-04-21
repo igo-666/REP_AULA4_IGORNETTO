@@ -1,42 +1,53 @@
-// =====================
-// DADOS DOS CARROS
-// =====================
-const carros = [
-  {
-    id: 1,
-    nome: "Onix 2020",
-    preco: "R$ 45.000",
-    precoValor: 45000,
-    tipo: "carro",
-    perfil: "economia",
-    ano: 2020,
-    km: 40000,
-    imagem: "ASSETS/imagens/onix.jpg"
-  },
-  {
-    id: 2,
-    nome: "Jeep Compass 2021",
-    preco: "R$ 95.000",
-    precoValor: 95000,
-    tipo: "SUV",
-    perfil: "conforto",
-    ano: 2021,
-    km: 30000,
-    imagem: "ASSETS/imagens/compass.jpg"
-  },
-  {
-    id: 3,
-    nome: "HB20 2019",
-    preco: "R$ 42.000",
-    precoValor: 42000,
-    tipo: "carro",
-    perfil: "economia",
-    ano: 2019,
-    km: 50000,
-    imagem: "ASSETS/imagens/hb20.jpg"
-  }
-];
+import { db, collection, getDocs } from "./firebase.js";
 
+let carros = [];
+
+// =====================
+// FIREBASE
+// =====================
+async function carregarCarrosFirebase() {
+  const snapshot = await getDocs(collection(db, "carros"));
+
+  carros = [];
+
+  snapshot.forEach(docSnap => {
+    const data = docSnap.data();
+
+    carros.push({
+      id: String(docSnap.id),
+      nome: data.nome || "",
+      preco: Number(data.preco) || 0,
+      ano: Number(data.ano) || 0,
+      km: Number(data.km) || 0,
+      imagens: data.imagens || [data.imagem || ""]
+    });
+  });
+}
+
+// =====================
+// FORMATAÇÃO MOEDA
+// =====================
+function formatarMoedaInput(input) {
+  input.addEventListener("input", () => {
+    let valor = input.value.replace(/\D/g, "");
+
+    if (!valor) {
+      input.value = "";
+      return;
+    }
+
+    valor = (Number(valor) / 100).toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
+
+    input.value = valor;
+  });
+}
+
+function parseMoeda(valor) {
+  if (!valor) return 0;
+  return Number(valor.replace(/\./g, "").replace(",", "."));
+}
 
 // =====================
 // FAVORITOS
@@ -45,81 +56,55 @@ function getFavoritos() {
   return JSON.parse(localStorage.getItem("favoritos")) || [];
 }
 
-function salvarFavoritos(lista) {
-  localStorage.setItem("favoritos", JSON.stringify(lista));
-}
-
 function toggleFavorito(id) {
-  let favoritos = getFavoritos();
+  let fav = getFavoritos();
 
-  if (favoritos.includes(id)) {
-    favoritos = favoritos.filter(f => f !== id);
+  if (fav.includes(id)) {
+    fav = fav.filter(f => f !== id);
   } else {
-    favoritos.push(id);
+    fav.push(id);
   }
 
-  salvarFavoritos(favoritos);
+  localStorage.setItem("favoritos", JSON.stringify(fav));
   atualizarContadorFavoritos();
 
-  if (document.getElementById("lista-carros")) {
-    aplicarFiltros();
-  }
+  renderPagina();
 }
 
-
-// =====================
-// CONTADOR MENU
-// =====================
 function atualizarContadorFavoritos() {
-  const contador = document.getElementById("contador-favoritos");
-  if (!contador) return;
-
-  contador.textContent = getFavoritos().length;
+  const el = document.getElementById("contador-favoritos");
+  if (el) el.textContent = getFavoritos().length;
 }
 
-
 // =====================
-// MOSTRAR CARROS
+// RENDER LISTA
 // =====================
 function mostrarCarros(listaCarros) {
   const lista = document.getElementById("lista-carros");
   if (!lista) return;
 
-  const favoritos = getFavoritos();
   lista.innerHTML = "";
 
-  listaCarros.forEach(carro => {
+  const favoritos = getFavoritos();
 
+  listaCarros.forEach(carro => {
     const card = document.createElement("div");
     card.classList.add("card");
 
     card.innerHTML = `
-      <a href="carro.html?id=${carro.id}" class="card-link">
+      <a href="carro.html?id=${carro.id}">
+        <img src="${carro.imagens[0]}">
+        <span class="favorito">
+          ${favoritos.includes(carro.id) ? "❤️" : "🤍"}
+        </span>
 
-        <div class="card-top">
-          <img src="${carro.imagem}">
-          <span class="favorito ${favoritos.includes(carro.id) ? 'ativo' : ''}">
-            ${favoritos.includes(carro.id) ? "❤️" : "🤍"}
-          </span>
-        </div>
-
-        <div class="card-body">
-          <h2>${carro.nome}</h2>
-          <p class="preco">${carro.preco}</p>
-
-          <div class="card-meta">
-            <span>${carro.ano}</span>
-            <span>${carro.km} km</span>
-          </div>
-        </div>
-
+        <h2>${carro.nome}</h2>
+        <p>R$ ${carro.preco.toLocaleString("pt-BR")}</p>
       </a>
     `;
 
-    // 👉 clique no coração NÃO abre o card
     card.querySelector(".favorito").onclick = (e) => {
       e.preventDefault();
-      e.stopPropagation();
       toggleFavorito(carro.id);
     };
 
@@ -127,221 +112,122 @@ function mostrarCarros(listaCarros) {
   });
 }
 
-
 // =====================
-// FILTROS
+// FILTRO ESTOQUE
 // =====================
 function aplicarFiltros() {
-  const tipo = document.getElementById("filtro-tipo")?.value;
-  const preco = document.getElementById("filtro-preco")?.value;
+  let lista = [...carros];
+
+  const precoMax = parseMoeda(
+    document.getElementById("filtro-preco")?.value
+  );
+
   const ordenar = document.getElementById("ordenar")?.value;
 
-  let filtrados = [...carros];
-
-  if (tipo) filtrados = filtrados.filter(c => c.tipo === tipo);
-  if (preco) filtrados = filtrados.filter(c => c.precoValor <= preco);
-
-  switch (ordenar) {
-    case "menor":
-      filtrados.sort((a, b) => a.precoValor - b.precoValor);
-      break;
-    case "maior":
-      filtrados.sort((a, b) => b.precoValor - a.precoValor);
-      break;
-    case "novo":
-      filtrados.sort((a, b) => b.ano - a.ano);
-      break;
-    case "km":
-      filtrados.sort((a, b) => a.km - b.km);
-      break;
+  if (precoMax > 0) {
+    lista = lista.filter(c => c.preco <= precoMax);
   }
 
-  mostrarCarros(filtrados);
-}
-
-
-// =====================
-// PÁGINA DO CARRO
-// =====================
-function carregarCarro() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-
-  if (!id) return;
-
-  const carro = carros.find(c => c.id == id);
-  if (!carro) return;
-
-  document.getElementById("nome-carro").textContent = carro.nome;
-  document.getElementById("imagem-carro").src = carro.imagem;
-  document.getElementById("preco-carro").textContent = carro.preco;
-
-  const btnZap = document.getElementById("btn-whatsapp");
-  if (btnZap) {
-    btnZap.href = `https://wa.me/5527992821705?text=Olá, tenho interesse no ${carro.nome}`;
+  if (ordenar === "menor") {
+    lista.sort((a, b) => a.preco - b.preco);
   }
 
-  // BOTÃO FAVORITO
-  const btnFav = document.getElementById("btn-favorito");
-
-  if (btnFav) {
-
-    const atualizar = () => {
-      const fav = getFavoritos().includes(carro.id);
-      btnFav.textContent = fav ? "FAVORITO ❤️" : "ADICIONAR AOS FAVORITOS 🤍";
-    };
-
-    atualizar();
-
-    btnFav.onclick = () => {
-      toggleFavorito(carro.id);
-      atualizar();
-    };
+  if (ordenar === "maior") {
+    lista.sort((a, b) => b.preco - a.preco);
   }
-}
-
-
-// =====================
-// FAVORITOS PAGE
-// =====================
-function mostrarFavoritos() {
-  const favoritos = getFavoritos();
-  const lista = carros.filter(c => favoritos.includes(c.id));
 
   mostrarCarros(lista);
 }
 
-
 // =====================
-// LIMPAR FAVORITOS
+// CARRO DETALHE + GALERIA
 // =====================
-function limparFavoritos() {
-  localStorage.removeItem("favoritos");
-  mostrarFavoritos();
-  atualizarContadorFavoritos();
-}
+function carregarCarro() {
+  const id = new URLSearchParams(window.location.search).get("id");
+  const carro = carros.find(c => c.id == id);
+  if (!carro) return;
 
+  document.getElementById("nome-carro").textContent = carro.nome;
+  document.getElementById("preco-carro").textContent =
+    "R$ " + carro.preco.toLocaleString("pt-BR");
 
-// =====================
-// WHATSAPP FAVORITOS
-// =====================
-function enviarFavoritosWhatsApp() {
-  const favoritos = getFavoritos();
-  const lista = carros.filter(c => favoritos.includes(c.id));
+  const imgPrincipal = document.getElementById("imagem-carro");
+  imgPrincipal.src = carro.imagens[0];
 
-  if (lista.length === 0) {
-    alert("Nenhum favorito.");
-    return;
+  const miniaturas = document.getElementById("miniaturas");
+
+  if (miniaturas) {
+    miniaturas.innerHTML = "";
+
+    carro.imagens.forEach(img => {
+      const el = document.createElement("img");
+      el.src = img;
+
+      el.onclick = () => {
+        imgPrincipal.src = img;
+      };
+
+      miniaturas.appendChild(el);
+    });
   }
-
-  let msg = "Olá, tenho interesse nesses veículos:%0A%0A";
-
-  lista.forEach(c => {
-    msg += `- ${c.nome} - ${c.preco}%0A`;
-  });
-
-  window.open(`https://wa.me/5527992821705?text=${msg}`, "_blank");
 }
-
 
 // =====================
 // SIMULAÇÃO
 // =====================
 function simularFinanciamento() {
-
-  const entradaRaw = document.getElementById("entrada").value;
-  const entrada = Number(entradaRaw.replace(/\D/g, "")) / 100;
+  const entrada = parseMoeda(document.getElementById("entrada").value);
   const parcelas = Number(document.getElementById("parcelas").value);
 
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+  const id = new URLSearchParams(window.location.search).get("id");
   const carro = carros.find(c => c.id == id);
 
-  if (!carro) return;
+  const valor = carro.preco - entrada;
 
-  const restante = carro.precoValor - entrada;
-
-  if (restante <= 0) {
-    document.getElementById("resultado-simulacao").textContent =
-      "Entrada cobre o valor total.";
-    return;
-  }
-
-  const taxa = 0.02;
+  const taxa = 0.018;
 
   const parcela =
-    (restante * (1 + taxa * parcelas)) / parcelas;
+    valor * (taxa * Math.pow(1 + taxa, parcelas)) /
+    (Math.pow(1 + taxa, parcelas) - 1);
 
   document.getElementById("resultado-simulacao").textContent =
     `${parcelas}x de R$ ${parcela.toFixed(2)}`;
+}
 
-  const btn = document.getElementById("btn-financiamento");
+// =====================
+// CONTROLE PÁGINA
+// =====================
+function renderPagina() {
+  const path = window.location.pathname;
 
-  if (btn) {
-    btn.style.display = "block";
+  if (path.includes("estoque.html")) {
+    mostrarCarros(carros);
 
-    btn.onclick = () => {
-      const mensagem = `Olá! Fiz uma simulação no site:
+    document.getElementById("filtro-preco")
+      ?.addEventListener("input", aplicarFiltros);
 
-Veículo: ${carro.nome}
-Entrada: R$ ${entrada}
-Parcelas: ${parcelas}x de R$ ${parcela.toFixed(2)}
+    document.getElementById("ordenar")
+      ?.addEventListener("change", aplicarFiltros);
+  }
 
-Isso é apenas uma simulação.`;
+  if (path.includes("carro.html")) {
+    carregarCarro();
 
-      window.open(
-        `https://wa.me/5527992821705?text=${encodeURIComponent(mensagem)}`,
-        "_blank"
-      );
-    };
+    document.getElementById("btn-simular")
+      ?.addEventListener("click", simularFinanciamento);
+
+    const entradaInput = document.getElementById("entrada");
+    if (entradaInput) formatarMoedaInput(entradaInput);
   }
 }
 
-
 // =====================
-// FORMATAR ENTRADA
+// INIT
 // =====================
-const inputEntrada = document.getElementById("entrada");
-
-if (inputEntrada) {
-  inputEntrada.addEventListener("input", (e) => {
-    let v = e.target.value.replace(/\D/g, "");
-    v = (Number(v) / 100).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL"
-    });
-    e.target.value = v;
-  });
-}
-
-
-// =====================
-// INICIALIZAÇÃO
-// =====================
-document.addEventListener("DOMContentLoaded", () => {
-
+document.addEventListener("DOMContentLoaded", async () => {
   atualizarContadorFavoritos();
 
-  if (document.getElementById("lista-carros")) {
-    aplicarFiltros();
-  }
+  await carregarCarrosFirebase();
 
-  if (window.location.pathname.includes("carro.html")) {
-    carregarCarro();
-  }
-
-  if (window.location.pathname.includes("favoritos.html")) {
-    mostrarFavoritos();
-  }
-
-  const filtros = [
-    document.getElementById("filtro-tipo"),
-    document.getElementById("filtro-preco"),
-    document.getElementById("ordenar")
-  ];
-
-  filtros.forEach(el => {
-    if (el) el.addEventListener("change", aplicarFiltros);
-  });
-
+  renderPagina();
 });

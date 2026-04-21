@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
   <title>Estoque - Premium Motors</title>
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="CSS/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -19,11 +25,12 @@
       <li><a href="index.html">Início</a></li>
       <li><a href="estoque.html">Estoque</a></li>
       <li>
-  <a href="favoritos.html">
-    Favoritos (<span id="contador-favoritos">0</span>)
-  </a>
-</li>
+        <a href="favoritos.html">
+          Favoritos <span id="contador-favoritos" class="contador"></span>
+        </a>
+      </li>
       <li><a href="recomendador.html">Descubra seu carro ideal</a></li>
+      <li><a href="troca.html">Troca</a></li>
       <li><a href="contato.html">Contato</a></li>
       <li><a href="localizacao.html">Localização</a></li>
       <li><a href="sobre.html">Sobre</a></li>
@@ -36,17 +43,19 @@
   <!-- FILTROS -->
   <section class="filtros">
 
+    <input type="text" id="busca-nome" placeholder="Buscar por nome...">
+
     <select id="filtro-tipo">
       <option value="">Todos</option>
       <option value="carro">Carro</option>
       <option value="SUV">SUV</option>
     </select>
 
-    <input 
-      type="number" 
-      id="filtro-preco" 
-      placeholder="Preço máximo"
-    >
+<input type="text" id="filtro-preco" placeholder="Preço máximo">
+
+    <input type="number" id="filtro-ano-min" placeholder="Ano mín." min="1900" max="2100">
+    <input type="number" id="filtro-ano-max" placeholder="Ano máx." min="1900" max="2100">
+    <input type="number" id="filtro-km-max" placeholder="KM máx." min="0">
 
     <select id="ordenar">
       <option value="">Ordenar</option>
@@ -55,6 +64,8 @@
       <option value="novo">Mais novo</option>
       <option value="km">Menor KM</option>
     </select>
+
+    <button id="btn-limpar-filtros" class="btn btn-secundario" type="button">Limpar</button>
 
   </section>
 
@@ -73,10 +84,18 @@
 
 <footer>
   <p>© 2026 PREMIUM MOTORS</p>
-  <p>Contato: (27) 99999-9999</p>
+  <p>Contato: (27) 99282-1705</p>
+  <p class="footer-legal"><a href="privacidade.html">Política de privacidade</a></p>
 </footer>
 
-<script src="JS/main.js"></script>
+<a href="https://wa.me/5527992821705"
+   class="whatsapp-float"
+   target="_blank">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script type="module" src="JS/site.js"></script>
+<script type="module" src="JS/estoque.js"></script>
 
 </body>
 </html>

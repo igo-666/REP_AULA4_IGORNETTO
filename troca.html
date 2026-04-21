@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <title>Troca - Premium Motors</title>
+  <link rel="stylesheet" href="CSS/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar">
+    <h1 class="logo">PREMIUM MOTORS</h1>
+
+    <ul class="menu">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="estoque.html">Estoque</a></li>
+      <li>
+        <a href="favoritos.html">
+          Favoritos <span id="contador-favoritos" class="contador"></span>
+        </a>
+      </li>
+      <li><a href="recomendador.html">Descubra seu carro ideal</a></li>
+      <li><a href="troca.html">Troca</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main style="max-width: 900px; margin: 0 auto; padding: 30px 18px;">
+  <h1 style="margin-bottom: 10px;">Avaliação de troca</h1>
+  <p style="opacity:0.75; margin-bottom: 18px;">
+    Envie os dados do seu carro e algumas fotos. Nossa equipe retorna a avaliação pelo WhatsApp.
+  </p>
+
+  <div class="simulador">
+    <h3>Seu contato</h3>
+    <input id="troca-nome" placeholder="Seu nome">
+    <input id="troca-whatsapp" placeholder="Seu WhatsApp (DDD + número)">
+
+    <h3 style="margin-top: 14px;">Seu carro</h3>
+    <input id="troca-modelo" placeholder="Modelo (ex: Onix, Civic, Compass)">
+    <input id="troca-ano" type="number" placeholder="Ano (ex: 2018)">
+    <input id="troca-km" type="number" placeholder="KM (ex: 85000)">
+
+    <select id="troca-combustivel">
+      <option value="">Combustível</option>
+      <option value="Flex">Flex</option>
+      <option value="Etanol">Etanol</option>
+      <option value="Gasolina">Gasolina</option>
+      <option value="Diesel">Diesel</option>
+      <option value="GNV">GNV</option>
+    </select>
+
+    <input id="troca-valor" placeholder="Valor que você espera (opcional)">
+
+    <h3 style="margin-top: 14px;">Fotos</h3>
+    <p style="opacity:0.8; font-size:0.95rem; margin-bottom:10px;">
+      As imagens são enviadas para a nuvem e os <strong>links</strong> entram na mensagem do WhatsApp da loja — quem avalia a troca abre as fotos por esses links (até 6 fotos).
+    </p>
+    <input id="troca-fotos" type="file" accept="image/*" multiple>
+    <div id="troca-preview" style="display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px;"></div>
+
+    <p id="troca-status" style="display:none; opacity:0.8; margin-top: 10px;"></p>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px;">
+      <button id="troca-enviar" class="btn btn-whatsapp" type="button">
+        <i class="fa-brands fa-whatsapp"></i>
+        Enviar para avaliação
+      </button>
+      <button id="troca-limpar" class="btn btn-secundario" type="button">Limpar</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 PREMIUM MOTORS</p>
+  <p>Contato: (27) 99282-1705</p>
+  <p class="footer-legal"><a href="privacidade.html">Política de privacidade</a></p>
+</footer>
+
+<a href="https://wa.me/5527992821705"
+   class="whatsapp-float"
+   target="_blank">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script type="module" src="JS/site.js"></script>
+<script type="module" src="JS/troca.js"></script>
+</body>
+</html>
+

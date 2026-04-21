@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Estoque público na vitrine; escrita apenas com login não-anônimo (ex.: e-mail/senha do admin).
+    match /carros/{carId} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    // Favoritos: usuário anônimo ou autenticado só no próprio subdocumento.
+    match /users/{userId}/favoritos/{favId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Premium Motors</title>
+</head>
+
+<body style="background:#0A0A0A; color:white; font-family:Arial; padding:20px;">
+
+<h1>Cadastro de Veículo</h1>
+
+<input id="nome" placeholder="Nome"><br><br>
+<input id="preco" placeholder="Preço"><br><br>
+<input id="ano" placeholder="Ano"><br><br>
+<input id="km" placeholder="KM"><br><br>
+
+<h3>Ficha técnica</h3>
+<select id="combustivel">
+  <option value="">Combustível</option>
+  <option value="Flex">Flex</option>
+  <option value="Etanol">Etanol</option>
+  <option value="Gasolina">Gasolina</option>
+  <option value="Diesel">Diesel</option>
+  <option value="GNV">GNV</option>
+</select><br><br>
+
+<select id="cambio">
+  <option value="">Câmbio</option>
+  <option value="Manual">Manual</option>
+  <option value="Automático">Automático</option>
+  <option value="CVT">CVT</option>
+  <option value="Automatizado">Automatizado</option>
+</select><br><br>
+
+<input id="cor" placeholder="Cor (ex: Preto)"><br><br>
+<input id="placaFinal" placeholder="Final da placa (opcional, ex: 3)"><br><br>
+
+<h3>Imagens</h3>
+<input type="file" id="input-imagens" multiple accept="image/*"><br><br>
+
+<div id="preview-imagens" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+
+<br>
+<button onclick="cadastrar()">Cadastrar</button>
+
+<p id="admin-status" style="display:none; margin-top:12px; opacity:0.85;"></p>
+
+<h2>Carros cadastrados</h2>
+<div id="lista-admin"></div>
+
+<!-- ===================== -->
+<!-- MODAL EDITAR -->
+<!-- ===================== -->
+<div id="modal-editar" style="
+display:none;
+position:fixed;
+top:0; left:0;
+width:100%; height:100%;
+background:rgba(0,0,0,0.8);
+z-index:999;
+justify-content:center;
+align-items:center;
+">
+
+  <div style="background:#111; padding:20px; width:500px; max-height:90%; overflow:auto; border-radius:10px;">
+
+    <h2>Editar Veículo</h2>
+
+    <input id="edit-nome" placeholder="Nome"><br><br>
+    <input id="edit-preco" placeholder="Preço"><br><br>
+    <input id="edit-ano" placeholder="Ano"><br><br>
+    <input id="edit-km" placeholder="KM"><br><br>
+
+    <h3>Ficha técnica</h3>
+    <select id="edit-combustivel">
+      <option value="">Combustível</option>
+      <option value="Flex">Flex</option>
+      <option value="Etanol">Etanol</option>
+      <option value="Gasolina">Gasolina</option>
+      <option value="Diesel">Diesel</option>
+      <option value="GNV">GNV</option>
+    </select><br><br>
+
+    <select id="edit-cambio">
+      <option value="">Câmbio</option>
+      <option value="Manual">Manual</option>
+      <option value="Automático">Automático</option>
+      <option value="CVT">CVT</option>
+      <option value="Automatizado">Automatizado</option>
+    </select><br><br>
+
+    <input id="edit-cor" placeholder="Cor (ex: Preto)"><br><br>
+    <input id="edit-placaFinal" placeholder="Final da placa (opcional, ex: 3)"><br><br>
+
+    <h3>Imagens</h3>
+    <input type="file" id="edit-input-imagens" multiple><br><br>
+
+    <div id="edit-preview" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+
+    <br>
+    <button onclick="salvarEdicao()">Salvar</button>
+    <button onclick="fecharModal()">Cancelar</button>
+
+  </div>
+</div>
+
+<script type="module" src="JS/site.js"></script>
+<script type="module" src="./JS/admin.js"></script>
+
+</body>
+</html>

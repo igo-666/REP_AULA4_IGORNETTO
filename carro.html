@@ -3,9 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
   <title>Veículo - PREMIUM MOTORS</title>
-  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="stylesheet" href="CSS/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -18,11 +26,12 @@
       <li><a href="index.html">Início</a></li>
       <li><a href="estoque.html">Estoque</a></li>
       <li>
-  <a href="favoritos.html">
-    Favoritos (<span id="contador-favoritos">0</span>)
-  </a>
-</li>
+        <a href="favoritos.html">
+          Favoritos <span id="contador-favoritos" class="contador"></span>
+        </a>
+      </li>
       <li><a href="recomendador.html">Descubra seu carro ideal</a></li>
+      <li><a href="troca.html">Troca</a></li>
       <li><a href="contato.html">Contato</a></li>
       <li><a href="localizacao.html">Localização</a></li>
       <li><a href="sobre.html">Sobre</a></li>
@@ -33,83 +42,122 @@
 <main class="carro-container">
 
   <!-- GALERIA -->
-<div class="galeria">
+  <div class="galeria">
+    <div class="imagem-principal">
+      <button id="galeria-prev" class="galeria-nav" aria-label="Imagem anterior" type="button">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
 
-  <div class="imagem-principal">
-    <img id="imagem-carro" alt="Carro">
+      <img id="imagem-carro" alt="Imagem do veículo" loading="eager">
+
+      <button id="galeria-next" class="galeria-nav" aria-label="Próxima imagem" type="button">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <div id="galeria-contador" class="galeria-contador"></div>
+    </div>
+    <div class="miniaturas" id="miniaturas"></div>
   </div>
 
-  <div class="miniaturas" id="miniaturas"></div>
+  <!-- MODAL FULLSCREEN (ZOOM) -->
+  <div id="galeria-modal" class="galeria-modal" aria-hidden="true">
+    <button id="galeria-modal-fechar" class="galeria-modal-fechar" type="button" aria-label="Fechar">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
 
-</div>
+    <button id="galeria-modal-prev" class="galeria-modal-nav" type="button" aria-label="Imagem anterior">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
 
-<!-- BOTÃO SIMULAR (CORRIGIDO) -->
-<button id="btn-simular" class="btn">Simular</button>
+    <div class="galeria-modal-stage">
+      <img id="galeria-modal-img" alt="Imagem do veículo em tela cheia">
+    </div>
+
+    <button id="galeria-modal-next" class="galeria-modal-nav" type="button" aria-label="Próxima imagem">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <button id="galeria-modal-zoom" class="galeria-modal-zoom" type="button" aria-label="Zoom">
+      <i class="fa-solid fa-magnifying-glass-plus"></i>
+    </button>
+  </div>
 
   <!-- INFO -->
   <div class="carro-info">
+
     <h1 id="nome-carro"></h1>
     <p id="preco-carro" class="preco"></p>
-    <!-- ===================== -->
-<!-- SIMULAÇÃO DE FINANCIAMENTO -->
-<!-- ===================== -->
-<div class="simulador">
 
-  <h3>Simular financiamento</h3>
+    <div class="carro-actions">
+      <a id="btn-whatsapp" class="btn btn-whatsapp carro-cta" target="_blank" rel="noreferrer">
+        <i class="fa-brands fa-whatsapp"></i>
+        Falar no WhatsApp
+      </a>
 
-  <label>Entrada (R$):</label>
-  <input type="text" id="entrada" placeholder="Ex: 20.000">
+      <button id="btn-favorito" class="btn btn-secundario" type="button"></button>
 
-  <label>Parcelas:</label>
-  <select id="parcelas">
-    <option value="12">12x</option>
-    <option value="24">24x</option>
-    <option value="36">36x</option>
-    <option value="48">48x</option>
-  </select>
+      <a href="estoque.html" class="btn btn-secundario" type="button">
+        Voltar ao estoque
+      </a>
+    </div>
 
- <<button id="btn-simular" class="btn">Simular</button>
+    <div class="ficha-tecnica">
+      <h3>Ficha técnica</h3>
+      <div class="ficha-grid">
+        <div class="ficha-item"><span class="ficha-label">Ano</span><span id="ft-ano" class="ficha-value">-</span></div>
+        <div class="ficha-item"><span class="ficha-label">KM</span><span id="ft-km" class="ficha-value">-</span></div>
+        <div class="ficha-item"><span class="ficha-label">Combustível</span><span id="ft-combustivel" class="ficha-value">-</span></div>
+        <div class="ficha-item"><span class="ficha-label">Câmbio</span><span id="ft-cambio" class="ficha-value">-</span></div>
+        <div class="ficha-item"><span class="ficha-label">Cor</span><span id="ft-cor" class="ficha-value">-</span></div>
+        <div class="ficha-item"><span class="ficha-label">Final da placa</span><span id="ft-placaFinal" class="ficha-value">-</span></div>
+      </div>
+    </div>
 
-  <p id="resultado-simulacao"></p>
+    <!-- SIMULADOR -->
+    <div class="simulador">
 
-  <p class="aviso">
-    *Valores simulados. Sujeitos à aprovação de crédito.
-  </p>
+      <h3>Simular financiamento</h3>
 
- <button id="btn-financiamento" class="btn btn-whatsapp" style="display:none;">
-  Quero financiar via WhatsApp
- </button>
-</div>
-    <!-- BOTÃO DE FAVORITO NA PÁGINA DO CARRO -->
-<button id="btn-favorito" class="btn btn-secundario">
-  ❤️ Adicionar aos favoritos
-</button>
+      <label>Entrada (R$):</label>
+      <input type="text" id="entrada" placeholder="Ex: 20.000">
 
-    <ul class="ficha">
-      <li><strong>Ano:</strong> 2021</li>
-      <li><strong>KM:</strong> 35.000</li>
-      <li><strong>Combustível:</strong> Flex</li>
-      <li><strong>Câmbio:</strong> Automático</li>
-    </ul>
+      <label>Parcelas:</label>
+      <select id="parcelas">
+        <option value="12">12x</option>
+        <option value="24">24x</option>
+        <option value="36">36x</option>
+        <option value="48">48x</option>
+      </select>
 
-    <a id="btn-whatsapp" target="_blank" class="btn">Falar no WhatsApp</a>
-    <a href="estoque.html" class="btn btn-secundario">Voltar</a>
+      <button id="btn-simular" class="btn">Simular</button>
+
+      <p id="resultado-simulacao"></p>
+      <p id="resultado-total"></p>
+
+      <button id="btn-financiamento" class="btn btn-whatsapp" style="display:none;">
+        Quero financiar via WhatsApp
+      </button>
+
+    </div>
+
   </div>
 
 </main>
 
 <footer>
   <p>© 2026 PREMIUM MOTORS</p>
-  <p>Contato: (27) 99999-9999</p>
+  <p>Contato: (27) 99282-1705</p>
+  <p class="footer-legal"><a href="privacidade.html">Política de privacidade</a></p>
 </footer>
 
-<a href="https://wa.me/5599999999999?text=Olá, tenho interesse em um veículo"
+<a href="https://wa.me/5527992821705"
    class="whatsapp-float"
-   target="_blank">
-  💬
+   target="_blank"
+   rel="noreferrer">
+  <i class="fa-brands fa-whatsapp"></i>
 </a>
 
-<script src="js/main.js"></script>
-
+<script type="module" src="JS/site.js"></script>
+<script type="module" src="JS/carro.js"></script>
 </body>
 </html>

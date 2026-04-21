@@ -3,9 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
   <title>Descubra seu carro ideal</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="CSS/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -18,11 +24,12 @@
       <li><a href="index.html">Início</a></li>
       <li><a href="estoque.html">Estoque</a></li>
       <li>
-  <a href="favoritos.html">
-    Favoritos (<span id="contador-favoritos">0</span>)
-  </a>
-</li>
+        <a href="favoritos.html">
+          Favoritos <span id="contador-favoritos" class="contador"></span>
+        </a>
+      </li>
       <li><a href="recomendador.html">Descubra seu carro ideal</a></li>
+      <li><a href="troca.html">Troca</a></li>
       <li><a href="contato.html">Contato</a></li>
       <li><a href="localizacao.html">Localização</a></li>
       <li><a href="sobre.html">Sobre</a></li>
@@ -30,11 +37,12 @@
   </nav>
 </header>
 
-<main>
+<main class="reco-page">
 
   <h1>Descubra seu carro ideal</h1>
+  <p class="reco-subtitle">Responda rapidamente e nós sugerimos os veículos com melhor compatibilidade para você.</p>
 
-  <div class="form">
+  <div class="form reco-form">
 
     <label>Tipo de veículo:</label>
     <select id="tipo">
@@ -56,26 +64,55 @@
       <option value="desempenho">Desempenho</option>
     </select>
 
-    <button onclick="recomendar()" class="btn">Ver resultado</button>
+    <label>Combustível (opcional):</label>
+    <select id="combustivel">
+      <option value="">Tanto faz</option>
+      <option value="Flex">Flex</option>
+      <option value="Etanol">Etanol</option>
+      <option value="Gasolina">Gasolina</option>
+      <option value="Diesel">Diesel</option>
+      <option value="GNV">GNV</option>
+    </select>
+
+    <label>Câmbio (opcional):</label>
+    <select id="cambio">
+      <option value="">Tanto faz</option>
+      <option value="Manual">Manual</option>
+      <option value="Automático">Automático</option>
+      <option value="CVT">CVT</option>
+      <option value="Automatizado">Automatizado</option>
+    </select>
+
+    <button id="btn-recomendar" class="btn" type="button">Encontrar sugestões</button>
+    <button id="btn-limpar-reco" class="btn btn-secundario" type="button">Limpar</button>
 
   </div>
 
-  <div id="resultado"></div>
+  <div id="resultado" class="reco-resultados"></div>
+
+  <section class="reco-history-wrap">
+    <div class="reco-history-head">
+      <h2>Últimas recomendações</h2>
+      <button id="btn-limpar-historico" class="btn btn-secundario" type="button">Limpar histórico</button>
+    </div>
+    <div id="reco-historico" class="reco-history-list"></div>
+  </section>
 
 </main>
 
 <footer>
   <p>© 2026 PREMIUM MOTORS</p>
-  <p>Contato: (27) 99999-9999</p>
+  <p>Contato: (27) 99282-1705</p>
+  <p class="footer-legal"><a href="privacidade.html">Política de privacidade</a></p>
 </footer>
 
-<a href="https://wa.me/5599999999999?text=Olá, tenho interesse em um veículo"
+<a href="https://wa.me/5527992821705"
    class="whatsapp-float"
    target="_blank">
-  💬
+  <i class="fa-brands fa-whatsapp"></i>
 </a>
 
-<script src="js/main.js"></script>
-<script src="js/recomendador.js"></script>
+<script type="module" src="JS/site.js"></script>
+<script type="module" src="JS/recomendador.js"></script>
 </body>
 </html>

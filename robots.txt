@@ -1,0 +1,8 @@
+# Ajuste a URL do sitemap quando o domínio final estiver definido.
+# Sitemap: https://www.exemplo.com.br/sitemap.xml
+
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /login.html
